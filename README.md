@@ -36,9 +36,9 @@ Let's figure out how different static site generators output static files.
 - Docusaurus outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash
 - Docusaurus's SPA router (React-Router) can route both `/myPath` and `/myPath/` after React hydration
 
-### TODO
+### TODO add other solutions
 
-TODO Add comments for all other static site generators
+TODO Add comments for all other static site generators and static hosting solutions (Apache, Nginx...)
 
 ## Hosting providers
 
@@ -142,3 +142,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 | /folder/ | ✅            |
 | /both    | ✅            |
 | /both/   | ✅            |
+
+### TODO add other hosting providers
+
+TODO Deploy static folder to all other static hosting providers: Surge, Render, Cloudflare, S3/CloudFront, GatsbyCDN...
