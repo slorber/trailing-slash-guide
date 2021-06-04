@@ -2,7 +2,9 @@
 
 Have trailing slash problems after deploying a static website in production?
 
-This repo is for you, and aims to cover an exhaustive combination of static site generators and hosting providers.
+This repo aims to cover an exhaustive combination of [static site generators](#static-site-generators) and [hosting providers](#hosting-providers), and suggest some [possible solutions](#possible-solutions).
+
+Solution are proposed at the very end.
 
 **Help wanted**: please help complete the data, making it exhaustive, factual and up-to-date.
 
@@ -76,14 +78,18 @@ Let's see the behavior of each host provider for the following urls:
 
 **Deployment**: [slorber.github.io/trailing-slash-guide](https://slorber.github.io/trailing-slash-guide)
 
-| Url      | Result                           |
-| -------- | -------------------------------- |
-| /file    | ✅                                |
-| /file/   | 💢 404                           |
-| /folder  | ➡️ /folder/                       |
-| /folder/ | ✅                                |
-| /both    | ✅                                |
-| /both/   | ✅                                |
+| Url                | Result      |
+| ------------------ | ----------- |
+| /file              | ✅           |
+| /file/             | 💢 404      |
+| /file.html         | ✅           |
+| /folder            | ➡️ /folder/ |
+| /folder/           | ✅           |
+| /folder/index.html | ✅           |
+| /both              | ✅           |
+| /both/             | ✅           |
+| /both.html         | ✅           |
+| /both/index.html   | ✅           |
 
 ### Netlify
 
@@ -95,27 +101,35 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide-default.netlify.app](https://trailing-slash-guide-default.netlify.app)
 
-| Url      | Result       |
-| -------- | ------------ |
-| /file    | ✅            |
-| /file/   | ➡️ /file     |
-| /folder  | ➡️ /folder/  |
-| /folder/ | ✅            |
-| /both    | ✅            |
-| /both/   | ➡️ /both     |
+| Url                | Result      |
+| ------------------ | ----------- |
+| /file              | ✅           |
+| /file/             | ➡️ /file    |
+| /file.html         | ✅           |
+| /folder            | ➡️ /folder/ |
+| /folder/           | ✅           |
+| /folder/index.html | ✅           |
+| /both              | ✅           |
+| /both/             | ➡️ /both    |
+| /both.html         | ✅           |
+| /both/index.html   | ✅           |
 
 #### Pretty Urls enabled
 
 **Deployment**: [trailing-slash-guide-pretty-url-enabled.netlify.app](https://trailing-slash-guide-pretty-url-enabled.netlify.app)
 
-| Url      | Result       |
-| -------- | ------------ |
-| /file    | ✅            |
-| /file/   | ➡️ /file     |
-| /folder  | ➡️ /folder/  |
-| /folder/ | ✅            |
-| /both    | ✅            |
-| /both/   | ➡️ /both     |
+| Url                | Result      |
+| ------------------ | ----------- |
+| /file              | ✅           |
+| /file/             | ➡️ /file    |
+| /file.html         | ✅           |
+| /folder            | ➡️ /folder/ |
+| /folder/           | ✅           |
+| /folder/index.html | ✅           |
+| /both              | ✅           |
+| /both/             | ➡️ /both    |
+| /both.html         | ✅           |
+| /both/index.html   | ✅           |
 
 #### Pretty Urls disabled
 
@@ -123,14 +137,18 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](https://trailing-slash-guide-pretty-url-disabled.netlify.app)
 
-| Url      | Result       |
-| -------- | ------------ |
-| /file    | ✅            |
-| /file/   | ✅            |
-| /folder  | ✅            |
-| /folder/ | ✅            |
-| /both    | ✅            |
-| /both/   | ✅            |
+| Url                | Result |
+| ------------------ | ------ |
+| /file              | ✅      |
+| /file/             | ✅      |
+| /file.html         | ✅      |
+| /folder            | ✅      |
+| /folder/           | ✅      |
+| /folder/index.html | ✅      |
+| /both              | ✅      |
+| /both/             | ✅      |
+| /both.html         | ✅      |
+| /both/index.html   | ✅      |
 
 ### Vercel
 
@@ -152,3 +170,54 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 ### TODO add other hosting providers
 
 TODO Deploy static folder to all other static hosting providers: Surge, Render, Cloudflare, S3/CloudFront, GatsbyCDN...
+
+## Possible solutions
+
+Here's a non-exhaustive list of possible solutions to try.
+
+### Change settings of your static site generator
+
+Some static site generators have settings to change how static files are outputted.
+
+### Change your host provider
+
+Use a host provider that supports better the static files created by your static site generator. Eventually look into your current host provider options to fine-tune how files are served.
+
+### Post-process your static site generator output before deployment
+
+It is possible to change from one static file pattern `/myPath.html` to another `/myPath/index.html`.
+
+Notice that most host providers don't create redirect if both files are present, so you could also use both patterns at the same time.
+
+A simple Node.js script can be used to process your static site before deployment, for example:
+
+```js
+const glob = require('glob-promise');
+const path = require('path');
+const fs = require('fs-extra');
+
+// /myPath/index.html => /myPath.html
+async function generateSimpleHtmlFiles(outDir) {
+
+  const pattern = path.join(outDir, '/**/index.html');
+  const filePaths = (await glob(pattern)).filter(filePath => {
+    return filePath !== path.join(outDir, '/index.html');
+  });
+
+
+  await Promise.all(
+    filePaths.map(async filePath => {
+      if ((await fs.stat(filePath)).isDirectory()) {
+        return;
+      }
+      const filePathCopy = `${path.dirname(filePath)}.html`;
+      if (await fs.pathExists(filePathCopy)) {
+      } else {
+        await fs.copyFile(filePath, filePathCopy);
+      }
+    })
+  );
+}
+
+generateSimpleHtmlFiles("/public"); // Your static site output folder
+```
