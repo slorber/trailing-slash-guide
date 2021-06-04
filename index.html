@@ -33,6 +33,13 @@
         document.body.appendChild(div);
       }
 
+      function printMarkdownTable(results) {
+        const markdownTableString = markdownTable([
+          ['Url', 'Redirect Url'],
+          ...results.map(result => [result.url, result.redirectUrl])
+        ]);
+        console.log("markdownTableString\n",markdownTableString);
+      }
 
       async function run() {
         const Urls = [
@@ -47,12 +54,7 @@
 
         results.forEach(addUrlResultToDOM);
 
-        const markdownTableString = markdownTable([
-          ['Url', 'Redirect Url'],
-          ...results.map(result => ({url: result.url, redirect: result.redirectUrl}))
-        ])
-
-        console.log("markdownTableString\n",markdownTableString);
+        printMarkdownTable(results);
       }
 
       run().catch(e => {
