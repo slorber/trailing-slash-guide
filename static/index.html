@@ -2,11 +2,15 @@
 <body>
   <script>
       async function testUrl(url) {
-        const response = await fetch(url,{redirect: 'manual'})
+        const response = await fetch(
+                url,
+                // {redirect: 'manual'}
+        )
         console.log("response", {url,response});
         return {
           status: response.status,
-          redirectLocation: response.headers.get("Location")
+          redirectTo: response.redirected ? new URL(response.url).pathname : undefined
+          // redirectLocation: response.headers.get("Location")
         };
       }
 
@@ -19,8 +23,9 @@
         a.appendChild(document.createTextNode(url));
         a.href = url;
 
+        const text = result.redirectTo ? ` => ${result.redirectTo}` : " => no redirect"
         div.appendChild(a);
-        div.appendChild(document.createTextNode(` => Status=${result.status} ${result.redirectLocation}`));
+        div.appendChild(document.createTextNode(text));
 
         document.body.appendChild(div);
       }
