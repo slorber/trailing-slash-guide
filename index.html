@@ -1,8 +1,42 @@
 <html>
 <body>
   <script>
-      fetch("/file").then(result => console.log("result",{result}));
-      fetch("/file/").then(result => console.log("result",{result}));
+      async function testUrl(url) {
+        const result = await fetch(url,{redirect: 'manual'})
+        return {
+          status: result.status,
+          redirectLocation: result.headers.get("Location")
+        };
+      }
+
+      async function processUrl(url) {
+        const result = await testUrl(url);
+        console.log("processUrl",{url,result});
+
+        const div = document.createElement("div");
+        const a = document.createElement('a');
+        a.appendChild(document.createTextNode(url));
+        a.href = url;
+
+        div.appendChild(a);
+        div.appendChild(document.createTextNode(` => Status=${result.status} ${result.redirectLocation}`));
+
+        document.body.appendChild(div);
+      }
+
+
+      const Urls = [
+        "/file",
+        "/file/",
+        "/folder",
+        "/folder/",
+        "/both",
+        "/both/",
+      ];
+      for (const url of Urls) {
+        await processUrl(url);
+      }
+
   </script>
 </body>
 </html>
