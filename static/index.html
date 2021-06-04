@@ -4,7 +4,13 @@
       import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
       async function fetchUrl(url) {
+        // Using {redirect: "manual"} is not a good solution => shows status=0 + redirect url is not accessible
         const response = await fetch(url)
+        console.log({url,response});
+        // Even when there's a redirect, status is 200 because fetch follows redirects
+        if (response.status !== 200) {
+          throw new Error(`Bad response for url= ${url} => ${response.status}`)
+        }
         return {
           url,
           redirectUrl: response.redirected ? new URL(response.url).pathname : undefined
@@ -36,12 +42,12 @@
 
       async function run() {
         const Urls = [
-          "/file",
-          "/file/",
-          "/folder",
-          "/folder/",
-          "/both",
-          "/both/",
+          "file",
+          "file/",
+          "folder",
+          "folder/",
+          "both",
+          "both/",
         ];
         const results = await Promise.all(Urls.map(fetchUrl))
 
