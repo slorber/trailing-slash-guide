@@ -1,10 +1,7 @@
 <html>
 <body>
   <script type="module">
-      import MarkdownTable from "https://cdn.skypack.dev/markdown-table@3.0.0";
-
-      console.log("MarkdownTable",MarkdownTable);
-      window.MarkdownTable = MarkdownTable;
+      import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
       async function fetchUrl(url) {
         const response = await fetch(
@@ -50,6 +47,12 @@
 
         results.forEach(addUrlResultToDOM);
 
+        const markdownTableString = markdownTable([
+          ['Url', 'Redirect Url'],
+          ...results.map(result => ({url: result.url, redirect: result.redirectUrl}))
+        ])
+
+        console.log("markdownTableString\n",markdownTableString);
       }
 
       run().catch(e => {
