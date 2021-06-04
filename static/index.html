@@ -16,8 +16,9 @@
 
   async function fetchUrl(url) {
     // Using {redirect: "manual"} is not a good solution => shows status=0 + redirect url is not accessible
-    const response = await fetch(addBaseUrl(url));
-    console.log({url, response});
+    const absoluteUrl = addBaseUrl(url);
+    const response = await fetch(absoluteUrl);
+    console.log({url, absoluteUrl, response});
     return {
       url,
       status: response.status, // Note: fetch follows redirects and output status=200
