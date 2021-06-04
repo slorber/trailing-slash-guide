@@ -38,9 +38,9 @@ Let's figure out how different static site generators output static files.
 - Docusaurus outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash.
 - Docusaurus's SPA router (React-Router) can route both `/myPath` and `/myPath/` after React hydration.
 
-### TODO add other solutions
+### TODO: add other static site generators
 
-TODO Add comments for all other static site generators and static hosting solutions (Apache, Nginx...)
+TODO add all other static site generators
 
 ## Hosting providers
 
@@ -171,9 +171,43 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 | /both.html         | ✅      |
 | /both/index.html   | ✅      |
 
-### TODO add other hosting providers
+### Cloudflare Pages
 
-TODO Deploy static folder to all other static hosting providers: Surge, Render, Cloudflare, S3/CloudFront, GatsbyCDN...
+**Deployment**: [trailing-slash-guide.pages.dev](https://trailing-slash-guide.pages.dev)
+
+| Url                | Result      |
+| ------------------ | ----------- |
+| /file              | ✅           |
+| /file/             | ➡️ /file    |
+| /file.html         | ➡️ /file    |
+| /folder            | ➡️ /folder/ |
+| /folder/           | ✅           |
+| /folder/index.html | ➡️ /folder/ |
+| /both              | ✅           |
+| /both/             | ✅           |
+| /both.html         | ➡️ /both    |
+| /both/index.html   | ➡️ /both/   |
+
+### Render
+
+**Deployment**: [trailing-slash-guide.onrender.com](https://trailing-slash-guide.onrender.com)
+
+| Url                | Result |
+| ------------------ | ------ |
+| /file              | ✅      |
+| /file/             | ✅      |
+| /file.html         | ✅      |
+| /folder            | ✅      |
+| /folder/           | ✅      |
+| /folder/index.html | ✅      |
+| /both              | ✅      |
+| /both/             | ✅      |
+| /both.html         | ✅      |
+| /both/index.html   | ✅      |
+
+### TODO: add other hosting providers
+
+TODO add all other static hosting providers: S3/CloudFront, Amplify, Azure, Heroku, Surge, Firebase... and self-hosting tools (Apache, Nginx...)
 
 ## Possible solutions
 
