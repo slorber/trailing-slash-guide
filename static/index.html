@@ -3,22 +3,23 @@
 <script type="module">
   import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
-  // For GH pages, absolute urls like /file won't work as GH deployments have a base url
-  // Ex https://slorber.github.io/trailing-slash-guide/
-  // We must use "file" or "/trailing-slash-guide/file"
-  // Using a relative url like "file" is more convenient/portable
-  function toRelativeUrl(url) {
-    return url.substring(1);
+  // GH pages urls start with /trailing-slash-guide/ => we don't want the baseurl to pollute the result
+  const baseUrlPrefix = window.location.href.slice(0,-1); // ignore trailing /
+  function addBaseUrl(url) {
+    return `${baseUrlPrefix}${url}`;
+  }
+  function removeBaseUrl(url) {
+    return url.replace(baseUrlPrefix,"");
   }
 
   async function fetchUrl(url) {
     // Using {redirect: "manual"} is not a good solution => shows status=0 + redirect url is not accessible
-    const response = await fetch(toRelativeUrl(url));
+    const response = await fetch(addBaseUrl(url));
     console.log({url, response});
     return {
       url,
       status: response.status, // Note: fetch follows redirects and output status=200
-      redirectUrl: response.redirected ? new URL(response.url).pathname : undefined
+      redirectUrl: response.redirected ? removeBaseUrl(new URL(response.url).pathname) : undefined
     };
   }
 
@@ -34,7 +35,7 @@
     const div = document.createElement("div");
     const a = document.createElement('a');
     a.appendChild(document.createTextNode(result.url));
-    a.href = toRelativeUrl(result.url);
+    a.href = addBaseUrl(result.url);
 
     div.appendChild(a);
     div.appendChild(document.createTextNode(" - "));
