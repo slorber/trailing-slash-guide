@@ -25,17 +25,24 @@
       }
 
 
-      const Urls = [
-        "/file",
-        "/file/",
-        "/folder",
-        "/folder/",
-        "/both",
-        "/both/",
-      ];
-      for (const url of Urls) {
-        await processUrl(url);
+      async function run() {
+        const Urls = [
+          "/file",
+          "/file/",
+          "/folder",
+          "/folder/",
+          "/both",
+          "/both/",
+        ];
+        for (const url of Urls) {
+          await processUrl(url);
+        }
       }
+
+      run().catch(e => {
+        console.error(e);
+        alert("Error, check the console: " + e.message);
+      });
 
   </script>
 </body>
