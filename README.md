@@ -23,18 +23,18 @@ Let's figure out how different static site generators output static files.
 
 ### Gatsby
 
-- Gatsby outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash
-- Gatsby's SPA router (Reach-Router) can route both `/myPath` and `/myPath/` after React hydration
+- Gatsby outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash.
+- Gatsby's SPA router (Reach-Router) can route both `/myPath` and `/myPath/` after React hydration.
 
 ### Next.js
 
-- Next.js outputs by default `/myPath.html` for `/myPath`. This output generally works fine and host providers do not add any extra trailing slash.
+- Next.js outputs by default `/myPath.html` for `/myPath` on `next export`: static host providers generally don't add any extra trailing slash.
 - Next.js has a [{trailingSlash: true}](https://nextjs.org/docs/api-reference/next.config.js/trailing-slash) config setting to output `/myPath/index.html`.
 
 ### Docusaurus
 
-- Docusaurus outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash
-- Docusaurus's SPA router (React-Router) can route both `/myPath` and `/myPath/` after React hydration
+- Docusaurus outputs `/myPath/index.html` for `/myPath`: it can lead host providers to add a trailing slash.
+- Docusaurus's SPA router (React-Router) can route both `/myPath` and `/myPath/` after React hydration.
 
 ### TODO add other solutions
 
@@ -44,7 +44,7 @@ TODO Add comments for all other static site generators and static hosting soluti
 
 Let's deploy the same [static](/static) folder to multiple hosting providers, and see how each file is served.
 
-This folder is a representative sample of the output of static site generators
+This folder is a representative sample of the output of static site generators:
 
 ```sh 
 static
@@ -63,8 +63,10 @@ Let's see the behavior of each host provider for the following urls:
 
 - `/file`
 - `/file/`
+- `/file.html`
 - `/folder`
 - `/folder/`
+- `/folder/index.html`
 - `/both`
 - `/both/`
 
@@ -117,7 +119,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 #### Pretty Urls disabled
 
-**Important**: make sure the `Pretty Urls` checkbox is **really** unchecked (ie, don't use the broken `Disable asset optimization` global checkbox)
+**Important**: make sure the `Pretty Urls` checkbox is **really** unchecked (ie, don't use the broken `Disable asset optimization` global checkbox).
 
 **Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](https://trailing-slash-guide-pretty-url-disabled.netlify.app)
 
@@ -132,16 +134,20 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 ### Vercel
 
+**Important**: surprisingly, `next export` creates by default `/myPath.html` (when `trailingSlash: false`) but this pattern is not well supported by Vercel.
+
 **Deployment**: [trailing-slash-guide.vercel.app](https://trailing-slash-guide.vercel.app)
 
-| Url      | Result       |
-| -------- | ------------ |
-| /file    | ✅            |
-| /file/   | ✅            |
-| /folder  | ✅            |
-| /folder/ | ✅            |
-| /both    | ✅            |
-| /both/   | ✅            |
+| Url                | Result |
+| ------------------ | ------ |
+| /file              | 💢 404 |
+| /file/             | 💢 404 |
+| /file.html         | ✅      |
+| /folder            | ✅      |
+| /folder/           | ✅      |
+| /folder/index.html | ✅      |
+| /both              | ✅      |
+| /both/             | ✅      |
 
 ### TODO add other hosting providers
 
