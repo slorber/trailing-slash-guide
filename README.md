@@ -79,3 +79,16 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 | /both/   | /both        |
 
 #### Pretty Urls disabled
+
+**Important**: make sure the `Pretty Urls` checkbox is **really** unchecked (ie, don't use the broken `Disable asset optimization` global checkbox)
+
+**Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](trailing-slash-guide-pretty-url-disabled.netlify.app)
+
+| Url      | Redirect Url |
+| -------- | ------------ |
+| /file    | ✅            |
+| /file/   | ✅            |
+| /folder  | ✅            |
+| /folder/ | ✅            |
+| /both    | ✅            |
+| /both/   | ✅            |
