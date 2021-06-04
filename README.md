@@ -68,6 +68,11 @@ Let's see the behavior of each host provider for the following urls:
 - `/both`
 - `/both/`
 
+### GitHub Pages
+
+**Deployment**: [slorber.github.io/trailing-slash-guide](https://slorber.github.io/trailing-slash-guide)
+
+
 ### Netlify
 
 Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that affects the way a static site is served. Disabling the `Pretty Urls` setting can help prevent Netlify to add an unwanted trailing slash.
