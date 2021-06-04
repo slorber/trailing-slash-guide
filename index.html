@@ -1,66 +1,78 @@
 <html>
 <body>
-  <script type="module">
-      import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
+<script type="module">
+  import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
-      async function fetchUrl(url) {
-        // Using {redirect: "manual"} is not a good solution => shows status=0 + redirect url is not accessible
-        const response = await fetch(url)
-        console.log({url,response});
-        // Even when there's a redirect, status is 200 because fetch follows redirects
-        if (response.status !== 200) {
-          throw new Error(`Bad response for url= ${url} => ${response.status}`)
-        }
-        return {
-          url,
-          redirectUrl: response.redirected ? new URL(response.url).pathname : undefined
-        };
-      }
+  // For GH pages, absolute urls like /file won't work as GH deployments have a base url
+  // Ex https://slorber.github.io/trailing-slash-guide/
+  // We must use "file" or "/trailing-slash-guide/file"
+  // Using a relative url like "file" is more convenient/portable
+  function toRelativeUrl(url) {
+    return url.substring(1);
+  }
 
-      function addUrlResultToDOM(result) {
-        const div = document.createElement("div");
-        const a = document.createElement('a');
-        a.appendChild(document.createTextNode(result.url));
-        a.href = result.url;
+  async function fetchUrl(url) {
+    // Using {redirect: "manual"} is not a good solution => shows status=0 + redirect url is not accessible
+    const response = await fetch(toRelativeUrl(url));
+    console.log({url, response});
+    return {
+      url,
+      status: response.status, // Note: fetch follows redirects and output status=200
+      redirectUrl: response.redirected ? new URL(response.url).pathname : undefined
+    };
+  }
 
-        const text = result.redirectUrl ? ` ➡️ ${result.redirectUrl}` : '✅'
-        div.appendChild(a);
-        div.appendChild(document.createTextNode(" - "));
-        div.appendChild(document.createTextNode(text));
+  function formatResult(result) {
+    return result.status !== 200 ?
+      `💢 ${result.status}`
+      : result.redirectUrl ?
+        `➡️ ${result.redirectUrl}`
+        : '✅'
+  }
 
-        document.body.appendChild(div);
-      }
+  function addUrlResultToDOM(result) {
+    const div = document.createElement("div");
+    const a = document.createElement('a');
+    a.appendChild(document.createTextNode(result.url));
+    a.href = toRelativeUrl(result.url);
 
-      function printMarkdownTable(results) {
-        const markdownTableString = markdownTable([
-          ['Url', 'Redirect Url'],
-          ...results.map(result => [result.url, result.redirectUrl ? `➡️ ${result.redirectUrl}` : '✅'])
-        ]);
-        console.log("markdownTableString:");
-        console.log(markdownTableString);
-      }
+    div.appendChild(a);
+    div.appendChild(document.createTextNode(" - "));
+    div.appendChild(document.createTextNode(formatResult(result)));
 
-      async function run() {
-        const Urls = [
-          "file",
-          "file/",
-          "folder",
-          "folder/",
-          "both",
-          "both/",
-        ];
-        const results = await Promise.all(Urls.map(fetchUrl))
+    document.body.appendChild(div);
+  }
 
-        results.forEach(addUrlResultToDOM);
+  function printMarkdownTable(results) {
+    const markdownTableString = markdownTable([
+      ['Url', 'Result'],
+      ...results.map(result => [result.url, formatResult(result)])
+    ]);
+    console.log("markdownTableString:");
+    console.log(markdownTableString);
+  }
 
-        printMarkdownTable(results);
-      }
+  async function run() {
+    const Urls = [
+      "/file",
+      "/file/",
+      "/folder",
+      "/folder/",
+      "/both",
+      "/both/",
+    ];
+    const results = await Promise.all(Urls.map(fetchUrl))
 
-      run().catch(e => {
-        console.error(e);
-        alert("Error, check the console: " + e.message);
-      });
+    results.forEach(addUrlResultToDOM);
 
-  </script>
+    printMarkdownTable(results);
+  }
+
+  run().catch(e => {
+    console.error(e);
+    alert("Error, check the console: " + e.message);
+  });
+
+</script>
 </body>
 </html>
