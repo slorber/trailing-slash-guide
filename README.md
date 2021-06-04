@@ -166,6 +166,8 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 | /folder/index.html | ✅      |
 | /both              | ✅      |
 | /both/             | ✅      |
+| /both.html         | ✅      |
+| /both/index.html   | ✅      |
 
 ### TODO add other hosting providers
 
