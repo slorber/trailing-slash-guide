@@ -70,8 +70,18 @@ Let's see the behavior of each host provider for the following urls:
 
 ### GitHub Pages
 
+**Important**: GitHub Pages is historically one of the most popular and free option to host a static website. In 2021, there are better free alternatives, offering more features.
+
 **Deployment**: [slorber.github.io/trailing-slash-guide](https://slorber.github.io/trailing-slash-guide)
 
+| Url      | Result                           |
+| -------- | -------------------------------- |
+| /file    | ✅                                |
+| /file/   | 💢 404                           |
+| /folder  | ➡️ /folder/                       |
+| /folder/ | ✅                                |
+| /both    | ✅                                |
+| /both/   | ✅                                |
 
 ### Netlify
 
@@ -83,7 +93,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide-default.netlify.app](https://trailing-slash-guide-default.netlify.app)
 
-| Url      | Redirect Url |
+| Url      | Result       |
 | -------- | ------------ |
 | /file    | ✅            |
 | /file/   | ➡️ /file     |
@@ -96,7 +106,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide-pretty-url-enabled.netlify.app](https://trailing-slash-guide-pretty-url-enabled.netlify.app)
 
-| Url      | Redirect Url |
+| Url      | Result       |
 | -------- | ------------ |
 | /file    | ✅            |
 | /file/   | ➡️ /file     |
@@ -111,7 +121,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](https://trailing-slash-guide-pretty-url-disabled.netlify.app)
 
-| Url      | Redirect Url |
+| Url      | Result       |
 | -------- | ------------ |
 | /file    | ✅            |
 | /file/   | ✅            |
@@ -124,7 +134,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Deployment**: [trailing-slash-guide.vercel.app](https://trailing-slash-guide.vercel.app)
 
-| Url      | Redirect Url |
+| Url      | Result       |
 | -------- | ------------ |
 | /file    | ✅            |
 | /file/   | ✅            |
