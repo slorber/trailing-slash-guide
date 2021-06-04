@@ -54,7 +54,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Important**: the global checkbox `Disable asset optimization` is confusing and does not really disable the `Pretty Urls` settings in practice: make sure to uncheck all the `Asset optimization` independently.
 
-**Deployment**: [trailing-slash-guide-default.netlify.app](trailing-slash-guide-default.netlify.app)
+**Deployment**: [trailing-slash-guide-default.netlify.app](https://trailing-slash-guide-default.netlify.app)
 
 | Url      | Redirect to |
 | -------- | ------------ |
@@ -67,7 +67,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 #### Pretty Urls enabled
 
-**Deployment**: [trailing-slash-guide-pretty-url-enabled.netlify.app](trailing-slash-guide-pretty-url-enabled.netlify.app)
+**Deployment**: [trailing-slash-guide-pretty-url-enabled.netlify.app](https://trailing-slash-guide-pretty-url-enabled.netlify.app)
 
 | Url      | Redirect Url |
 | -------- | ------------ |
@@ -82,7 +82,7 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 **Important**: make sure the `Pretty Urls` checkbox is **really** unchecked (ie, don't use the broken `Disable asset optimization` global checkbox)
 
-**Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](trailing-slash-guide-pretty-url-disabled.netlify.app)
+**Deployment**: [trailing-slash-guide-pretty-url-disabled.netlify.app](https://trailing-slash-guide-pretty-url-disabled.netlify.app)
 
 | Url      | Redirect Url |
 | -------- | ------------ |
