@@ -97,9 +97,9 @@ Let's see the behavior of each host provider for the following urls:
 
 Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that affects the way a static site is served. Disabling the `Pretty Urls` setting can help prevent Netlify to add an unwanted trailing slash.
 
-#### Default settings (`Disable asset optimization` checked)
+**VERY IMPORTANT**: the global checkbox `Disable asset optimization` is confusing and does not really disable the `Pretty Urls` settings in practice: make sure to uncheck all the `Asset optimization` independently.
 
-**Important**: the global checkbox `Disable asset optimization` is confusing and does not really disable the `Pretty Urls` settings in practice: make sure to uncheck all the `Asset optimization` independently.
+#### Default settings (`Disable asset optimization` checked)
 
 **Deployment**: [trailing-slash-guide-default.netlify.app](https://trailing-slash-guide-default.netlify.app)
 
