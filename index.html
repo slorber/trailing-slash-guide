@@ -4,7 +4,7 @@
   import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
   // GH pages urls start with /trailing-slash-guide/ => we don't want the baseurl to pollute the result
-  const baseUrlPrefix = window.location.href.slice(0,-1); // ignore trailing /
+  const baseUrlPrefix = window.location.pathname.slice(0,-1); // ignore trailing /
   console.log({baseUrlPrefix})
 
   function addBaseUrl(url) {
