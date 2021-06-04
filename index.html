@@ -2,10 +2,11 @@
 <body>
   <script>
       async function testUrl(url) {
-        const result = await fetch(url,{redirect: 'manual'})
+        const response = await fetch(url,{redirect: 'manual'})
+        console.log("response", {url,response});
         return {
-          status: result.status,
-          redirectLocation: result.headers.get("Location")
+          status: response.status,
+          redirectLocation: response.headers.get("Location")
         };
       }
 
