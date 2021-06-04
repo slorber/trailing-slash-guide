@@ -71,6 +71,8 @@ Let's see the behavior of each host provider for the following urls:
 - `/folder/index.html`
 - `/both`
 - `/both/`
+- `/both.html`
+- `/both/index.html`
 
 ### GitHub Pages
 
