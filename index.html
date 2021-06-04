@@ -26,7 +26,7 @@
         a.appendChild(document.createTextNode(result.url));
         a.href = result.url;
 
-        const text = result.redirectUrl ? ` ===> ${result.redirectUrl}` : ""
+        const text = result.redirectUrl ? ` ➡️ ${result.redirectUrl}` : '✅'
         div.appendChild(a);
         div.appendChild(document.createTextNode(text));
 
@@ -36,7 +36,7 @@
       function printMarkdownTable(results) {
         const markdownTableString = markdownTable([
           ['Url', 'Redirect Url'],
-          ...results.map(result => [result.url, result.redirectUrl])
+          ...results.map(result => [result.url, result.redirectUrl ? `➡️ ${result.redirectUrl}` : '✅'])
         ]);
         console.log("markdownTableString:");
         console.log(markdownTableString);
