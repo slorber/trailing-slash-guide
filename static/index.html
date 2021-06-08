@@ -164,9 +164,19 @@
 
     function printMarkdownTable(allDeploymentsResults) {
       const markdownTableString = markdownTable([
-        ['Host', 'Settings', 'Url', ...Urls],
+        [
+          'Host',
+          'Settings',
+          'Url',
+          ...Urls,
+        ],
         ...allDeploymentsResults.map(({deployment,results}) => {
-          return [deployment.name,deployment.settings, `[link](${deployment.url})`, ...results.map(formatResult)]
+          return [
+            deployment.name,
+            deployment.settings,
+            `[link](${deployment.url})`,
+            ...results.map(formatResult)
+          ];
         }),
       ]);
       console.log("\n\n\nmarkdownTableString for all deployments:\n");
