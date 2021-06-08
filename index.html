@@ -3,6 +3,62 @@
 <script type="module">
   import {markdownTable} from "https://cdn.skypack.dev/markdown-table@3.0.0";
 
+  const Urls = [
+    "/file",
+    "/file/",
+    "/file.html",
+    "/folder",
+    "/folder/",
+    "/folder/index.html",
+    "/both",
+    "/both/",
+    "/both.html",
+    "/both/index.html",
+  ];
+
+  const Deployments = [
+    {
+      name: "GitHub Pages",
+      settings: "" ,
+      url: "https://slorber.github.io/trailing-slash-guide"
+    },
+    {
+      name: "Netlify",
+      settings: "Default",
+      url: "https://trailing-slash-guide-default.netlify.app"
+    },
+    {
+      name: "Netlify",
+      settings: "Pretty Urls on",
+      url: "https://trailing-slash-guide-pretty-url-enabled.netlify.app"
+    },
+    {
+      name: "Netlify",
+      settings: "Pretty Urls off",
+      url: "https://trailing-slash-guide-pretty-url-disabled.netlify.app"
+    },
+    {
+      name: "Vercel",
+      settings: "",
+      url: "https://trailing-slash-guide.vercel.app"
+    },
+    {
+      name: "Cloudflare Pages",
+      settings: "",
+      url: "https://trailing-slash-guide.pages.dev"
+    },
+    {
+      name: "Render",
+      settings: "",
+      url: "https://trailing-slash-guide.onrender.com"
+    },
+    {
+      name: "Azure Static Web Apps",
+      settings: "",
+      url: "https://polite-bay-08a23e210.azurestaticapps.net/"
+    },
+  ];
+
   // GH pages urls start with /trailing-slash-guide/ => we don't want the baseurl to pollute the result
   const baseUrlPrefix = window.location.pathname.slice(0,-1); // ignore trailing /
   console.log({baseUrlPrefix})
@@ -52,23 +108,11 @@
       ['Url', 'Result'],
       ...results.map(result => [result.url, formatResult(result)])
     ]);
-    console.log("markdownTableString:");
+    console.log("\n\n\nmarkdownTableString for current host:\n");
     console.log(markdownTableString);
   }
 
   async function run() {
-    const Urls = [
-      "/file",
-      "/file/",
-      "/file.html",
-      "/folder",
-      "/folder/",
-      "/folder/index.html",
-      "/both",
-      "/both/",
-      "/both.html",
-      "/both/index.html",
-    ];
     const results = await Promise.all(Urls.map(fetchUrl))
 
     results.forEach(addUrlResultToDOM);
@@ -80,6 +124,58 @@
     console.error(e);
     alert("Error, check the console: " + e.message);
   });
+
+
+  async function runAllDeployments() {
+
+    const CorsProxy = "https://cors.bridged.cc/"
+
+    async function fetchDeploymentUrl(deployment,url) {
+      const absoluteUrl = `${deployment.url}${url}`;
+      const corsProxyUrl = `${CorsProxy}${absoluteUrl}`;
+      const response = await fetch(corsProxyUrl);
+
+      // cors proxy impl details :'(
+      const reqUrl = response.headers.get("x-request-url");
+      const finalUrl = response.headers.get("x-final-url");
+      const redirectUrl = absoluteUrl !== finalUrl ? new URL(finalUrl).pathname : undefined;
+
+      console.log("redirectUrl", {reqUrl,url, finalUrl,urlObj: new URL(response.url),redirectUrl});
+
+      return {
+        url,
+        status: response.status,
+        redirectUrl,
+      };
+    }
+
+    async function getSingleDeploymentResults(deployment) {
+      return Promise.all(Urls.map(url => fetchDeploymentUrl(deployment,url)));
+    }
+
+    async function getAllDeploymentsResults() {
+      return Promise.all(Deployments.map(async deployment => {
+        const results = await getSingleDeploymentResults(deployment);
+        return {deployment,results};
+      }));
+    }
+
+    function printMarkdownTable(allDeploymentsResults) {
+      const markdownTableString = markdownTable([
+        ['Host', 'Settings', 'Url', ...Urls],
+        ...allDeploymentsResults.map(({deployment,results}) => {
+          return [deployment.name,deployment.settings, deployment.url, ...results.map(formatResult)]
+        }),
+      ]);
+      console.log("\n\n\nmarkdownTableString for all deployments:\n");
+      console.log(markdownTableString);
+    }
+
+    const allDeploymentsResults = await getAllDeploymentsResults();
+    printMarkdownTable(allDeploymentsResults);
+  }
+
+  runAllDeployments();
 
 </script>
 </body>
