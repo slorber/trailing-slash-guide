@@ -74,6 +74,19 @@ Let's see the behavior of each host provider for the following urls:
 - `/both.html`
 - `/both/index.html`
 
+### Summary
+
+| Host                  | Settings        | Url                                                          | /file  | /file/   | /file.html | /folder                          | /folder/ | /folder/index.html | /both  | /both/   | /both.html | /both/index.html |
+| --------------------- | --------------- | ------------------------------------------------------------ | ------ | -------- | ---------- | -------------------------------- | -------- | ------------------ | ------ | -------- | ---------- | ---------------- |
+| GitHub Pages          |                 | https://slorber.github.io/trailing-slash-guide               | ✅      | 💢 404   | ✅          | ➡️ /trailing-slash-guide/folder/ | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
+| Netlify               | Default         | https://trailing-slash-guide-default.netlify.app             | ✅      | ➡️ /file | ✅          | ➡️ /folder/                      | ✅        | ✅                  | ✅      | ➡️ /both | ✅          | ✅                |
+| Netlify               | Pretty Urls on  | https://trailing-slash-guide-pretty-url-enabled.netlify.app  | ✅      | ➡️ /file | ✅          | ➡️ /folder/                      | ✅        | ✅                  | ✅      | ➡️ /both | ✅          | ✅                |
+| Netlify               | Pretty Urls off | https://trailing-slash-guide-pretty-url-disabled.netlify.app | ✅      | ✅        | ✅          | ✅                                | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
+| Vercel                |                 | https://trailing-slash-guide.vercel.app                      | 💢 404 | 💢 404   | ✅          | ✅                                | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
+| Cloudflare Pages      |                 | https://trailing-slash-guide.pages.dev                       | ✅      | ➡️ /file | ➡️ /file   | ➡️ /folder/                      | ✅        | ➡️ /folder/        | ✅      | ✅        | ➡️ /both   | ➡️ /both/        |
+| Render                |                 | https://trailing-slash-guide.onrender.com                    | ✅ | ✅   | ✅     | ✅                           | ✅   | ✅             | ✅ | ✅   | ✅     | ✅           |
+| Azure Static Web Apps |                 | https://polite-bay-08a23e210.azurestaticapps.net/            | ✅      | 💢 404   | ✅          | ✅                                | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
+
 ### GitHub Pages
 
 **Important**: GitHub Pages is historically one of the most popular and free option to host a static website. In 2021, there are better free alternatives, offering more features.
