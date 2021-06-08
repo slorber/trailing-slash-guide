@@ -205,6 +205,23 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 | /both.html         | ✅      |
 | /both/index.html   | ✅      |
 
+### Azure Static Web Apps
+
+**Deployment**: [polite-bay-08a23e210.azurestaticapps.net](https://polite-bay-08a23e210.azurestaticapps.net/)
+
+| Url                | Result   |
+| ------------------ | -------- |
+| /file              | ✅      |
+| /file/             | 💢 404 |
+| /file.html         | ✅      |
+| /folder            | ✅      |
+| /folder/           | ✅      |
+| /folder/index.html | ✅      |
+| /both              | ✅      |
+| /both/             | ✅      |
+| /both.html         | ✅      |
+| /both/index.html   | ✅      |
+
 ### TODO: add other hosting providers
 
 TODO add all other static hosting providers: S3/CloudFront, Amplify, Azure, Heroku, Surge, Firebase... and self-hosting tools (Apache, Nginx...)
