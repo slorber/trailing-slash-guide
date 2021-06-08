@@ -135,12 +135,14 @@
       const corsProxyUrl = `${CorsProxy}${absoluteUrl}`;
       const response = await fetch(corsProxyUrl);
 
-      // cors proxy impl details :'(
-      const reqUrl = response.headers.get("x-request-url");
-      const finalUrl = response.headers.get("x-final-url");
-      const redirectUrl = absoluteUrl !== finalUrl ? new URL(finalUrl).pathname : undefined;
+      // Mostly for GH pages
+      function removeDeploymentBaseUrl(str) {
+        return str.replace(new URL(deployment.url).pathname,"");
+      }
 
-      console.log("redirectUrl", {reqUrl,url, finalUrl,urlObj: new URL(response.url),redirectUrl});
+      // cors proxy impl details :'(
+      const finalUrl = response.headers.get("x-final-url");
+      const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl).pathname) : undefined;
 
       return {
         url,
@@ -164,7 +166,7 @@
       const markdownTableString = markdownTable([
         ['Host', 'Settings', 'Url', ...Urls],
         ...allDeploymentsResults.map(({deployment,results}) => {
-          return [deployment.name,deployment.settings, deployment.url, ...results.map(formatResult)]
+          return [deployment.name,deployment.settings, `[link](${deployment.url})`, ...results.map(formatResult)]
         }),
       ]);
       console.log("\n\n\nmarkdownTableString for all deployments:\n");
