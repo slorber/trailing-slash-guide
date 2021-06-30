@@ -23,9 +23,9 @@ Let's get more familiar with trailing slash issues.
 - static site generators can emit different files for the same path `/myPath`: `/myPath.html` or `/myPath/index.html` (the later can lead to an additional trailing slash)
 - host providers all have a different behavior when serving static files, there is no standard
 
-## TL.DR
+## Summary
 
-Behavior of static hosting providers / CDNs for this static site:
+Considering this [static site](static):
 
 ```sh 
 static
@@ -40,6 +40,8 @@ static
     └── index.html
 ```
 
+Behavior of various static hosting providers:
+
 | Host                  | Settings        | Url                                                                  | /file  | /file/   | /file.html | /folder                          | /folder/ | /folder/index.html | /both  | /both/   | /both.html | /both/index.html |
 | --------------------- | --------------- | -------------------------------------------------------------------- | ------ | -------- | ---------- | -------------------------------- | -------- | ------------------ | ------ | -------- | ---------- | ---------------- |
 | GitHub Pages          |                 | [link](https://slorber.github.io/trailing-slash-guide)               | ✅      | 💢 404   | ✅          | ➡️ /folder/ | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
@@ -51,7 +53,6 @@ static
 | Render                |                 | [link](https://trailing-slash-guide.onrender.com)                    | ✅ | ✅   | ✅     | ✅                           | ✅   | ✅             | ✅ | ✅   | ✅     | ✅           |
 | Azure Static Web Apps |                 | [link](https://polite-bay-08a23e210.azurestaticapps.net/)            | ✅      | 💢 404   | ✅          | ✅                                | ✅        | ✅                  | ✅      | ✅        | ✅          | ✅                |
 
-
 ## Help Wanted
 
-Let's keep this resource up-to-date, and make it exhaustive.
+Let's keep this resource up-to-date, and make it exhaustive together.
