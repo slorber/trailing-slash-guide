@@ -96,9 +96,15 @@ Netlify has a setting `Post Processing > Asset Optimization > Pretty Urls` that 
 
 ## Vercel
 
-Vercel has a [`cleanUrls` option](https://vercel.com/docs/configuration#project/clean-urls), affecting how files are served.
+Vercel has 2 options affecting how files are served with 6 possible combinations:
+- [`cleanUrls`](https://vercel.com/docs/configuration#project/clean-urls)
+- [`trailingSlash`](https://vercel.com/docs/configuration#project/trailing-slash)
+
+**Important**: Next.js also has a distinct [`trailingSlash` option](https://nextjs.org/docs/api-reference/next.config.js/trailing-slash)
 
 **Important**: surprisingly, by default `next export` creates `/myPath.html` but this filename is not well-supported by Vercel by default (unless you use `cleanUrls: true`)
+
+### Default settings (no config file)
 
 **Deployment**: [trailing-slash-guide.vercel.app](https://trailing-slash-guide.vercel.app)
 
