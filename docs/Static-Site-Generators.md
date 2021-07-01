@@ -20,6 +20,12 @@ Let's figure out how different static site generators output static files for ro
 - Default output: `/myPath/index.html`
 - Configuration: [trailingSlash option](https://docusaurus.io/docs/docusaurus.config.js#trailing-slash)
 
+## NuxtJS
+
+- Command: `nuxt generate`
+- Default output: `/myPath`
+- Configuration: [trailingSlash option](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#trailingslash)
+
 ## TODO: add other static site generators
 
 TODO add all other static site generators
