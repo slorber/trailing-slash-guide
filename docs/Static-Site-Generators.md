@@ -23,7 +23,7 @@ Let's figure out how different static site generators output static files for ro
 ## NuxtJS
 
 - Command: `nuxt generate`
-- Default output: `/myPath`
+- Default output: `/myPath/index.html`
 - Configuration: [trailingSlash option](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#trailingslash)
 
 ## TODO: add other static site generators
