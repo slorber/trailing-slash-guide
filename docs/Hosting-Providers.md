@@ -174,4 +174,4 @@ Vercel has 2 options affecting how files are served with 6 possible combinations
 
 ## TODO: add other hosting providers
 
-TODO add all other static hosting providers: S3/CloudFront, Amplify, Azure, Heroku, Surge, Firebase... and self-hosting tools (Apache, Nginx...)
+TODO add all other static hosting providers: S3/CloudFront, Amplify, Azure, Heroku, Surge, Firebase, Gatsby Cloud ... and self-hosting tools (Apache, Nginx...)
