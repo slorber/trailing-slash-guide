@@ -131,13 +131,25 @@
     };
   }
 
-  function formatResult(result) {
+
+  function formatResultText(result) {
     return result.status !== 200 ?
       `💢 ${result.status}`
       : result.redirectUrl ?
         `➡️ ${result.redirectUrl}`
         : '✅'
   }
+  function formatResult(result) {
+    const a = document.createElement('a');
+    a.appendChild(document.createTextNode(formatResultText(result)));
+    a.href = addBaseUrl(result.url);
+    return a;
+  }
+  function formatResultMarkdown(result) {
+    return `[${formatResultText(result)}](${result.url})`
+  }
+
+
 
   function addUrlResultToDOM(result) {
     const div = document.createElement("div");
@@ -224,7 +236,7 @@
             deployment.name,
             deployment.settings,
             `[link](${deployment.url})`,
-            ...results.map(formatResult)
+            ...results.map(formatResultMarkdown)
           ];
         }),
       ]);
