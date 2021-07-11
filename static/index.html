@@ -48,37 +48,37 @@
     {
       name: "Vercel",
       settings: "Default",
-      url: "https://vercel-default-eight.vercel.app/"
+      url: "https://vercel-default-eight.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=false trailingSlash=undefined",
-      url: "https://vercel-cleanurls-false-trailingslash-undefined.vercel.app/"
+      url: "https://vercel-cleanurls-false-trailingslash-undefined.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=false trailingSlash=false",
-      url: "https://vercel-cleanurls-false-trailingslash-false.vercel.app/"
+      url: "https://vercel-cleanurls-false-trailingslash-false.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=false trailingSlash=true",
-      url: "https://vercel-cleanurls-false-trailingslash-true.vercel.app/"
+      url: "https://vercel-cleanurls-false-trailingslash-true.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=true trailingSlash=undefined",
-      url: "https://vercel-cleanurls-true-trailingslash-undefined.vercel.app/"
+      url: "https://vercel-cleanurls-true-trailingslash-undefined.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=true trailingSlash=false",
-      url: "https://vercel-cleanurls-true-trailingslash-false.vercel.app/"
+      url: "https://vercel-cleanurls-true-trailingslash-false.vercel.app"
     },
     {
       name: "Vercel",
       settings: "cleanUrls=true trailingSlash=true",
-      url: "https://vercel-cleanurls-true-trailingslash-true.vercel.app/"
+      url: "https://vercel-cleanurls-true-trailingslash-true.vercel.app"
     },
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,11 +102,18 @@
     {
       name: "Azure Static Web Apps",
       settings: "",
-      url: "https://polite-bay-08a23e210.azurestaticapps.net/"
+      url: "https://polite-bay-08a23e210.azurestaticapps.net"
     },
 
     /////////////////////////////////////////////////////////////////////////////////////////////
   ];
+
+  Deployments.forEach(deployment => {
+    if (deployment.url.endsWith("/") ) {
+      throw new Error("Please don't include trailing slash in deployment url: " + JSON.stringify(deployment))
+    }
+  })
+
 
   // GH pages urls start with /trailing-slash-guide/ => we don't want the baseurl to pollute the result
   const baseUrlPrefix = window.location.pathname.slice(0,-1); // ignore trailing /
@@ -126,6 +133,7 @@
     console.log({url, absoluteUrl, response});
     return {
       url,
+      absoluteUrl,
       status: response.status, // Note: fetch follows redirects and output status=200
       redirectUrl: response.redirected ? removeBaseUrl(new URL(response.url).pathname) : undefined
     };
@@ -139,27 +147,29 @@
         `➡️ ${result.redirectUrl}`
         : '✅'
   }
-  function formatResult(result) {
+  function formatResultDOM(result) {
     const a = document.createElement('a');
     a.appendChild(document.createTextNode(formatResultText(result)));
-    a.href = addBaseUrl(result.url);
+    a.href = addBaseUrl(result.absoluteUrl);
     return a;
   }
   function formatResultMarkdown(result) {
-    return `[${formatResultText(result)}](${result.url})`
+    return `[${formatResultText(result)}](${result.absoluteUrl})`
   }
 
 
 
   function addUrlResultToDOM(result) {
     const div = document.createElement("div");
+
     const a = document.createElement('a');
     a.appendChild(document.createTextNode(result.url));
-    a.href = addBaseUrl(result.url);
-
+    a.href = result.absoluteUrl;
     div.appendChild(a);
+
     div.appendChild(document.createTextNode(" - "));
-    div.appendChild(document.createTextNode(formatResult(result)));
+
+    div.appendChild(formatResultDOM(result));
 
     document.body.appendChild(div);
   }
@@ -167,7 +177,7 @@
   function printMarkdownTable(results) {
     const markdownTableString = markdownTable([
       ['Url', 'Result'],
-      ...results.map(result => [result.url, formatResult(result)])
+      ...results.map(result => [result.url, formatResultMarkdown(result)])
     ]);
     console.log("\n\n\nmarkdownTableString for current host:\n");
     console.log(markdownTableString);
@@ -207,6 +217,7 @@
 
       return {
         url,
+        absoluteUrl,
         status: response.status,
         redirectUrl,
       };
