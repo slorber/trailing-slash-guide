@@ -208,7 +208,11 @@
 
       // Mostly for GH pages
       function removeDeploymentBaseUrl(str) {
-        return str.replace(new URL(deployment.url).pathname,"");
+        const baseUrl = new URL(deployment.url).pathname;
+        if (baseUrl === "/") {
+          return str;
+        }
+        return str.replace(baseUrl,"");
       }
 
       // cors proxy impl details :'(
