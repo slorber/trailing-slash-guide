@@ -17,11 +17,16 @@
   ];
 
   const Deployments = [
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "GitHub Pages",
       settings: "" ,
       url: "https://slorber.github.io/trailing-slash-guide"
     },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "Netlify",
       settings: "Default",
@@ -37,26 +42,70 @@
       settings: "Pretty Urls off",
       url: "https://trailing-slash-guide-pretty-url-disabled.netlify.app"
     },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "Vercel",
-      settings: "",
-      url: "https://trailing-slash-guide.vercel.app"
+      settings: "Default",
+      url: "https://vercel-default-eight.vercel.app/"
     },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=false trailingSlash=undefined",
+      url: "https://vercel-cleanurls-false-trailingslash-undefined.vercel.app/"
+    },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=false trailingSlash=false",
+      url: "https://vercel-cleanurls-false-trailingslash-false.vercel.app/"
+    },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=false trailingSlash=true",
+      url: "https://vercel-cleanurls-false-trailingslash-true.vercel.app/"
+    },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=true trailingSlash=undefined",
+      url: "https://vercel-cleanurls-true-trailingslash-undefined.vercel.app/"
+    },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=true trailingSlash=false",
+      url: "https://vercel-cleanurls-true-trailingslash-false.vercel.app/"
+    },
+    {
+      name: "Vercel",
+      settings: "cleanUrls=true trailingSlash=true",
+      url: "https://vercel-cleanurls-true-trailingslash-true.vercel.app/"
+    },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "Cloudflare Pages",
       settings: "",
       url: "https://trailing-slash-guide.pages.dev"
     },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "Render",
       settings: "",
       url: "https://trailing-slash-guide.onrender.com"
     },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
     {
       name: "Azure Static Web Apps",
       settings: "",
       url: "https://polite-bay-08a23e210.azurestaticapps.net/"
     },
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
   ];
 
   // GH pages urls start with /trailing-slash-guide/ => we don't want the baseurl to pollute the result
