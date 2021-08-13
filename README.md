@@ -6,7 +6,7 @@ This repo explains factually the behavior of:
 - [Static Site generators](docs/Static-Site-Generators.md) 
 - [Hosting Providers](docs/Hosting-Providers.md)
 
-We also suggest some [possible solutions](docs/Solutios.md)
+We also suggest some [possible solutions](docs/Solutions.md)
 
 ## Intro
 
