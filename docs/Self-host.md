@@ -36,13 +36,17 @@ The Apache server has the following configuration in `sites-available`:
 ### How do I...
 
 - ...make the `/file` path accessible?
+
   A: Add the following to your configuration:
+  
   ```apache
 	RewriteEngine On
 	RewriteCond %{REQUEST_URI} !(\.[A-Za-z0-9]*$|/$)
 	RewriteRule ^(.*)$ $1.html
   ```
+  
   This appends the `.html` extension to any requests to routes without trailing slash or extension. Check out [trailing-slash-guide-apache-no-extension.sida-chen.com](http://trailing-slash-guide-apache-no-extension.sida-chen.com) for this configuration in action.
+  
   | Url                | Result      |
   | ------------------ | ----------- |
   | /file              | ✅          |
@@ -55,10 +59,15 @@ The Apache server has the following configuration in `sites-available`:
   | /both/             | ✅          |
   | /both.html         | ✅          |
   | /both/index.html   | ✅          |
+  
   Note the caveat: the `/folder` path is no longer accessible without an explict trailing slash.
+
 - ...enforce a trailing slash policy?
+
   A: <!-- TODO -->
+
 - ...make all routes accessible?
+
   A: <!-- TODO -->
 
 ## Nginx
