@@ -48,13 +48,14 @@ The Apache server has the following configuration in `sites-available`:
   | /file              | ✅          |
   | /file/             | 💢 404      |
   | /file.html         | ✅          |
-  | /folder            | ➡️ /folder/  |
+  | /folder            | 💢 404      |
   | /folder/           | ✅          |
   | /folder/index.html | ✅          |
-  | /both              | ➡️ /both/    |
+  | /both              | ✅          |
   | /both/             | ✅          |
   | /both.html         | ✅          |
   | /both/index.html   | ✅          |
+  Note the caveat: the `/folder` path is no longer accessible without an explict trailing slash.
 - ...enforce a trailing slash policy?
   A: <!-- TODO -->
 - ...make all routes accessible?
