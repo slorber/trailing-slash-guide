@@ -1,5 +1,5 @@
 {
   "public": true,
   "cleanUrls": true,
-  "trailingSlash": "undefined"
+  "trailingSlash": undefined
 }
