@@ -1,5 +1,4 @@
 {
   "public": true,
-  "cleanUrls": false,
-  "trailingSlash": "undefined"
+  "cleanUrls": false
 }
