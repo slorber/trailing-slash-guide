@@ -200,13 +200,14 @@
   async function runAllDeployments() {
 
     function corsProxify(url) {
+      // Code: https://github.com/slorber/vercel-proxy/blob/master/api/index.js
       return `https://slorber-cors-proxy.vercel.app/api?url=${encodeURIComponent(url)}`
     }
 
     async function fetchDeploymentUrl(deployment,url) {
       const absoluteUrl = `${deployment.url}${url}`;
       const corsProxyUrl = corsProxify(absoluteUrl);
-      const response = await fetch(corsProxyUrl,{redirect: "manual"});
+      const response = await fetch(corsProxyUrl);
 
       // Mostly for GH pages
       function removeDeploymentBaseUrl(str) {
@@ -217,21 +218,33 @@
         return str.replace(baseUrl,"");
       }
 
-      const finalUrl = response.headers.get("Location") ?? url;
+      // cors proxy impl details :'(
+      const finalUrl = response.headers.get("X-Final-Url") ?? url;
+      const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl).pathname) : undefined;
 
-      // console.log({url, finalUrl});
-      const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl,"https://example.com").pathname) : undefined;
+      // console.log(redirectUrl)
 
-      return {
+      const ret = {
         url,
         absoluteUrl,
         status: response.status,
         redirectUrl,
       };
+
+      // console.log(response.status,ret,response.url);
+
+      return ret;
     }
 
     async function getSingleDeploymentResults(deployment) {
-      return Promise.all(Urls.map(url => fetchDeploymentUrl(deployment,url)));
+      return Promise.all(Urls.map(async url => {
+          try {
+              return await fetchDeploymentUrl(deployment,url)
+          } catch (e) {
+              console.error(`fetchDeploymentUrl failure for url=${deployment.url}${url}\n${e.message}`)
+              throw e;
+          }
+      }));
     }
 
     async function getAllDeploymentsResults() {
