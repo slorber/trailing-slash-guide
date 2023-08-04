@@ -199,12 +199,14 @@
 
   async function runAllDeployments() {
 
-    const CorsProxy = "https://cors.bridged.cc/"
+    function corsProxify(url) {
+      return `https://slorber-cors-proxy.vercel.app/api?url=${encodeURIComponent(url)}`
+    }
 
     async function fetchDeploymentUrl(deployment,url) {
       const absoluteUrl = `${deployment.url}${url}`;
-      const corsProxyUrl = `${CorsProxy}${absoluteUrl}`;
-      const response = await fetch(corsProxyUrl);
+      const corsProxyUrl = corsProxify(absoluteUrl);
+      const response = await fetch(corsProxyUrl,{redirect: "manual"});
 
       // Mostly for GH pages
       function removeDeploymentBaseUrl(str) {
@@ -215,9 +217,10 @@
         return str.replace(baseUrl,"");
       }
 
-      // cors proxy impl details :'(
-      const finalUrl = response.headers.get("x-final-url");
-      const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl).pathname) : undefined;
+      const finalUrl = response.headers.get("Location") ?? url;
+
+      // console.log({url, finalUrl});
+      const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl,"https://example.com").pathname) : undefined;
 
       return {
         url,
