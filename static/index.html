@@ -219,7 +219,7 @@
       }
 
       // cors proxy impl details :'(
-      const finalUrl = response.headers.get("X-Final-Url") ?? url;
+      const finalUrl = response.headers.get("X-Final-Url") ?? absoluteUrl;
       const redirectUrl = absoluteUrl !== finalUrl ? removeDeploymentBaseUrl(new URL(finalUrl).pathname) : undefined;
 
       // console.log(redirectUrl)
