@@ -32,6 +32,12 @@ Let's figure out how different static site generators output static files for ro
 - Default output: `/myPath/index.html`
 - Configuration (Nuxt v2): [trailingSlash option](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#trailingslash)
 
+## Hugo
+
+- Command: `hugo`
+- Default output: `/myPath/index.html`
+- Configuration: no options available
+
 ## Angular Prerendering
 
 - Default output: `/myPath/index.html`
