@@ -3,6 +3,12 @@
 
 Let's figure out how different static site generators output static files for route `/myPath`.
 
+## Jekyll
+
+- Command: `jekyll build`
+- Default output: `/myPath.html`
+- Configuration: no options available
+
 ## Gatsby
 
 - Command: `gatsby build`
@@ -20,11 +26,17 @@ Let's figure out how different static site generators output static files for ro
 - Default output: `/myPath/index.html`
 - Configuration: [trailingSlash option](https://docusaurus.io/docs/docusaurus.config.js#trailing-slash)
 
-## NuxtJS
+## Nuxt
 
 - Command: `nuxt generate`
 - Default output: `/myPath/index.html`
-- Configuration: [trailingSlash option](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#trailingslash)
+- Configuration (Nuxt v2): [trailingSlash option](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-router#trailingslash)
+
+## Angular Prerendering
+
+- Default output: `/myPath/index.html`
+- Configuration: no options available
+- Docs: [Angular Prerendering (SSG)](https://angular.dev/guide/prerendering)
 
 ## TODO: add other static site generators
 
