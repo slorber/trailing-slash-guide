@@ -19,7 +19,7 @@ Let's figure out how different static site generators output static files for ro
 
 - Command: `next export`
 - Default output: `/myPath.html`
-- Configuration: [trailingSlash option](https://nextjs.org/docs/api-reference/next.config.js/trailing-slash) (different from Vercel [trailingSlash option](https://vercel.com/docs/configuration#project/trailing-slash))
+- Configuration: [trailingSlash option](https://nextjs.org/docs/api-reference/next.config.js/trailing-slash) (different from Vercel [trailingSlash option](https://vercel.com/docs/cli#project-configuration/trailing-slash))
 
 ## Docusaurus
 
