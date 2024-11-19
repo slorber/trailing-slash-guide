@@ -5,6 +5,7 @@ Have trailing slash problems after deploying a static website in production?
 This repo explains factually the behavior of:
 - [Static Site generators](docs/Static-Site-Generators.md) 
 - [Hosting Providers](docs/Hosting-Providers.md)
+- [Self-hosted HTTP servers](docs/Self-Host.md)
 
 We also suggest some [possible solutions](docs/Solutions.md)
 
